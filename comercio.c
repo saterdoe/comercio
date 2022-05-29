@@ -2,9 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
+
+int loguearVendedor();
 void mostrarDia(int);
 void manejarCaja();
 void vaciarBuffer();
+void mostrarNombreVendedor(int);
 float obtenerPrecio(int);
 float calcularPrecio(int, int);
 float cerrarVenta(int*);
@@ -19,14 +22,20 @@ int main(){
   float facturaciones[7] = {0};
   int promedios[7] = {0};
   int unidades_vend[3] = {0};
+  int logueo;
 
+  logueo = loguearVendedor();
+
+  if(logueo == 1){
+    printf("\n ****FUNCIONO EL LOGUEO****");
+  }
   for(i=0; i < 7; i++){
     mayor_venta = 0;
     mostrarDia(i);
     manejarCaja();
     do{
       vaciarBuffer();
-      printf("\n Seleccione el codigo del producto: \n100: Remera Basica \n120: Pantalon \n130: Buzo \n140: Camisa \n");
+      printf("\n Ingrese el codigo del producto: \n100: Remera Basica \n120: Pantalon \n130: Buzo \n140: Camisa \n");
       scanf("%d", &codigo_producto);
 
       if(codigo_producto != 0){
@@ -66,7 +75,8 @@ int main(){
       mayor_venta = total;
       vend_mayor = id;
     }
-    printf("\n La venta de mayor facturacion fue de $%.2f realizada por", mayor_venta);
+    printf("\n La venta de mayor facturacion fue de $%.2f realizada por ", mayor_venta);
+    mostrarNombreVendedor(id);
   }
 
 
@@ -138,6 +148,69 @@ float calcularPrecio(int prod, int cantidad){
   float precio;
   precio = obtenerPrecio(prod);
   return precio*cantidad;
+}
+
+void mostrarNombreVendedor(int id){
+  switch(id){
+    case 1:
+      printf("Pedro");
+      break;
+    case 2:
+      printf("Juan");
+      break;
+    case 3:
+      printf("Valeria");
+      break;
+  }
+}
+
+int loguearVendedor(){
+
+  int id_pedro = 1;
+  int id_juan = 2;
+  int id_valeria = 3;
+  char pass_pedro[9] = {'p','e','d','r','o','1','2','3'};
+  char pass_juan[9] = {'j','u','a','n','1','2','3','4'};
+  char pass_valeria[9] = {'v','a','l','e','1','2','3','4'};
+  char pass[10];
+  int id;
+
+  printf("\n Por favor ingrese su ID: ");
+  scanf("%d", &id);
+  switch(id){
+    case 1:
+      iniciop: printf("\n Bienvenido Pedro, por favor ingrese su contraseña: ");
+      scanf("%s", pass);
+      if( strcmp(pass_pedro, pass) == 0){
+        return 1;
+      }else {
+        printf("\n Contraseña incorrecta");
+        goto iniciop;
+      }
+      break;
+    case 2:
+      inicioj: printf("\n Bienvenido Juan, por favor ingrese su contraseña: ");
+      scanf("%s", pass);
+      if( strcmp(pass_juan, pass) == 0){
+        return 1;
+      }else {
+        printf("\n Contraseña incorrecta");
+        goto inicioj;
+      }
+      break;
+    case 3:
+      iniciov: printf("\n Bienvenida Valeria, por favor ingrese su contraseña: ");
+      scanf("%s", pass);
+      if( strcmp(pass_valeria, pass) == 0){
+        return 1;
+      }else {
+        printf("\n Contraseña incorrecta");
+        goto iniciov;
+      }
+      break;
+  }
+
+
 }
 
 /*
